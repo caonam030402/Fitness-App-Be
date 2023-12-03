@@ -1,12 +1,12 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { signUpDto } from './dto/signUpDto';
+import { CreateUserDto } from 'src/users/dto/createUserDto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('/signup')
-  singup(@Body() sigUpDto: signUpDto) {
-    return '';
+  singup(@Body() createUserDto: CreateUserDto) {
+    return this.authService.signUp(createUserDto);
   }
 }
