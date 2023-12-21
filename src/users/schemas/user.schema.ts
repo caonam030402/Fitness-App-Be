@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Type } from 'class-transformer';
 import { Document } from 'mongoose';
+import { Workout } from 'src/workouts/schemas/workout.schema';
 
 export type UserDocument = User & Document;
 
@@ -30,6 +32,10 @@ export class User extends Document {
 
   @Prop()
   date_of_birth: Date;
+
+  @Prop()
+  @Type(() => Workout)
+  workout: Workout[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
