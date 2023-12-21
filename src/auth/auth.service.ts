@@ -10,9 +10,9 @@ import { User } from './schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { JwtService, JwtVerifyOptions } from '@nestjs/jwt';
 import { successResponse } from 'src/utils';
-import { CreateUserDto } from 'src/users/dto/createUserDto';
 import { UsersService } from 'src/users/users.service';
-import { authDto } from './dto/authDto';
+import { SignInDto } from './dto/signInDto';
+import { SignUpDto } from './dto/signUpDto';
 
 @Injectable()
 export class AuthService {
@@ -23,8 +23,8 @@ export class AuthService {
     private usersService: UsersService,
   ) {}
 
-  async signUp(createUserDto: CreateUserDto) {
-    const { email, name, password } = createUserDto;
+  async signUp(signUpDto: SignUpDto) {
+    const { email, name, password } = signUpDto;
 
     const findEmail = await this.usersService.findByNameAndEmail(email, name);
     if (findEmail) {
@@ -49,8 +49,8 @@ export class AuthService {
       expires: process.env.REFRESH_TOKEN_EXPIRES_IN,
     });
   }
-  async signIn(body: authDto) {
-    const { email, password } = body;
+  async signIn(signInDto: SignInDto) {
+    const { email, password } = signInDto;
 
     const user = await this.usersService.findByEmail(email);
 
@@ -63,7 +63,7 @@ export class AuthService {
       throw new BadRequestException('Account or password is incorrect');
 
     const tokens = await this.getTokens(user._id, user.name);
-    console.log(body);
+
     return successResponse('Đăng nhập thành công', {
       user,
       access_token: tokens.accessToken,
