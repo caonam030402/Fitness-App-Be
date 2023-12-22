@@ -5,7 +5,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class WorkoutDetail {
   @Prop()
-  image: string;
+  imageUrl: string;
 
   @Prop()
   name: string;
@@ -14,7 +14,7 @@ export class WorkoutDetail {
   timeSeconds: number;
 
   @Prop()
-  desciption: string;
+  description: string;
 
   @Prop()
   video: string;

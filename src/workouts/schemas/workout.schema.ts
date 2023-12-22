@@ -9,10 +9,10 @@ export type WorkoutDocument = Workout & Document;
 })
 export class Workout {
   @Prop()
-  main: string;
+  name: string;
 
   @Prop()
-  image: string;
+  imageUrl: string;
 
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutDetail' }],

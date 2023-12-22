@@ -1,10 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Type } from 'class-transformer';
-import { Document } from 'mongoose';
-import { Workout } from 'src/workouts/schemas/workout.schema';
+import mongoose, { Document } from 'mongoose';
+import { WorkoutDocument } from 'src/workouts/schemas/workout.schema';
+
+export class WorkoutProgressForUser extends Document {
+  @Prop()
+  progress: number;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Workout',
+  })
+  workout: WorkoutDocument;
+}
 
 export type UserDocument = User & Document;
-
 @Schema({
   timestamps: true,
 })
@@ -34,8 +43,12 @@ export class User extends Document {
   date_of_birth: Date;
 
   @Prop()
-  @Type(() => Workout)
-  workout: Workout[];
+  nam: string;
+
+  @Prop({
+    type: [WorkoutProgressForUser],
+  })
+  workouts: WorkoutProgressForUser[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

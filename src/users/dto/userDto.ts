@@ -4,7 +4,9 @@ import {
   IsDateString,
   IsOptional,
   IsNumber,
+  IsArray,
 } from 'class-validator';
+import { WorkoutDto } from 'src/workouts/dto/workoutDto';
 
 export class UserDto {
   @IsOptional()
@@ -34,4 +36,8 @@ export class UserDto {
   @IsOptional()
   @IsDateString({}, { message: 'Please enter a valid date of birth' })
   readonly date_of_birth?: string;
+
+  @IsOptional()
+  @IsArray()
+  readonly workouts?: WorkoutDto;
 }

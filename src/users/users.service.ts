@@ -18,9 +18,19 @@ export class UsersService {
   }
 
   async update(body: UserDto, userId: string) {
-    const user = await this.userModel.findByIdAndUpdate(userId, body, {
-      new: true,
-    });
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, { ...body }, { new: true, strict: false })
+      .populate({
+        path: 'workouts.workout',
+        model: 'Workout',
+        strictPopulate: false,
+        populate: {
+          path: 'details',
+          model: 'WorkoutDetail',
+        },
+      })
+      .exec();
+
     return user;
   }
 

@@ -15,4 +15,6 @@ export class WorkoutsService {
     const workout = await this.workoutModel.find().populate('details');
     return successResponse('Lấy bài tập thành công', workout);
   }
+
+  async updateWorkoutForUser() {}
 }
