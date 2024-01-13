@@ -28,8 +28,7 @@ export class UsersService {
           path: 'details',
           model: 'WorkoutDetail',
         },
-      })
-      .exec();
+      });
 
     return user;
   }
@@ -43,6 +42,21 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    return this.userModel.findById(id, { password: 0 });
+    return this.userModel
+      .findById(id, { password: 0 })
+      .populate({
+        path: 'workouts.workout',
+        model: 'Workout',
+        strictPopulate: false,
+        populate: {
+          path: 'details',
+          model: 'WorkoutDetail',
+        },
+      })
+      .populate({
+        path: 'mealPlanners.mealPlanner',
+        model: 'MealPlanner',
+      })
+      .exec();
   }
 }

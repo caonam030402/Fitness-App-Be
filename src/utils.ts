@@ -6,3 +6,7 @@ export const successResponse = <T>(message: string, data: dataType<T>) => {
     data: data,
   };
 };
+
+export const calculateBMI = (height: number, weight: number) => {
+  return weight / ((height / 100) * 2);
+};
